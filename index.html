@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Álbum Panini Mundial</title>
+
+  <!-- React CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+    }
+
+    h1 {
+      background: #8e0000;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      width: 150px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.2s;
+      padding: 10px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .detail img {
+      width: 250px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #8e0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c62828;
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const jugadores = [
+  {
+    id: 1,
+    nombre: "Lionel Messi",
+    pais: "Argentina",
+    edad: 36,
+    posicion: "Delantero",
+    imagen: "https://i.imgur.com/8Km9tLL.jpg"
+  },
+  {
+    id: 2,
+    nombre: "Cristiano Ronaldo",
+    pais: "Portugal",
+    edad: 39,
+    posicion: "Delantero",
+    imagen: "https://i.imgur.com/1X6KX6C.jpg"
+  },
+  {
+    id: 3,
+    nombre: "Kylian Mbappé",
+    pais: "Francia",
+    edad: 25,
+    posicion: "Delantero",
+    imagen: "https://i.imgur.com/6VBx3io.jpg"
+  }
+];
+
+function App() {
+  const [seleccionado, setSeleccionado] = React.useState(null);
+
+  // Vista detalle
+  if (seleccionado) {
+    return (
+      <div className="detail">
+        <h1>{seleccionado.nombre}</h1>
+        <img src={seleccionado.imagen} />
+        <p><strong>País:</strong> {seleccionado.pais}</p>
+        <p><strong>Edad:</strong> {seleccionado.edad}</p>
+        <p><strong>Posición:</strong> {seleccionado.posicion}</p>
+        <button onClick={() => setSeleccionado(null)}>
+          Volver al álbum
+        </button>
+      </div>
+    );
+  }
+
+  // Vista principal (galería)
+  return (
+    <div>
+      <h1>Álbum Panini - Mundial</h1>
+      <div className="gallery">
+        {jugadores.map(j => (
+          <div 
+            key={j.id}
+            className="card"
+            onClick={() => setSeleccionado(j)}
+          >
+            <img src={j.imagen} />
+            <h3>{j.nombre}</h3>
+            <p>{j.pais}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+
+</body>
+</html>
